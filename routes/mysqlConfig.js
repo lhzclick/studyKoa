@@ -42,6 +42,7 @@ let allServices = {
         const jobId = Math.floor(Math.random() * 1000)+(new Date()).getTime() +''
         const createTime = (new Date()).getTime()
         const _sql = `INSERT INTO score (name,age,sex,score,type,jobId,createTime) VALUES ('${data.name}', ${data.age},'${data.sex}',${data.score},'${data.type}','${jobId}',${createTime})`
+        console.log(_sql)
         return allServices.query(_sql)
     },
     // 查
@@ -53,6 +54,29 @@ let allServices = {
         }else{
             _sql = `select * from score limit ${num1}, ${data.pageSize}`
         }
+        return allServices.query(_sql)
+    },
+    // 删
+    deleteScore:function(data){
+        const _sql = `delete  from score where jobId='${data.jobId}'`
+        return allServices.query(_sql)
+    },
+    // 改
+    editScore:function(data){
+        let str = ''
+        for(let i in data){
+            if(i!='jobId'){
+                if(i=='age'||i=='score'){
+                    str += `${i}=${data[i]},`
+                }else{
+                    str += `${i}='${data[i]}',`
+                }
+            }
+            
+        }
+        str = str.substr(0,str.length-1)
+        const _sql = `update score set ${str} where jobId='${data.jobId}'`
+        
         return allServices.query(_sql)
     }
 }

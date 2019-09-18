@@ -39,6 +39,7 @@ router.post('/addScore', async (ctx, next) => {
             }
         })
 })
+
 router.post('/getScore', async (ctx, next) => {
     const r_body = ctx.request.body
     await userService.getScore(r_body)
@@ -62,6 +63,65 @@ router.post('/getScore', async (ctx, next) => {
                 msg: err,
             }
         })
+})
+
+router.post('/deleteScore', async (ctx, next) => {
+    const r_body = ctx.request.body
+    await userService.deleteScore(r_body)
+        .then((data) => {
+            if(r_body.jobId){
+                ctx.body = {
+                    code: 200,
+                    msg: 'SUCCESS',
+                    data: data
+                }
+            }else{
+                ctx.body = {
+                    err: -3,
+                    msg: '请传入jobId',
+                }
+            }
+            
+        }).catch((err) => {
+            ctx.body = {
+                err: -2,
+                msg: err,
+            }
+        })
+})
+
+router.post('/editScore', async (ctx, next) => {
+    const r_body = ctx.request.body
+    const len = Object.keys(r_body).length
+    if(len>1){
+        await userService.editScore(r_body)
+        .then((data) => {
+            if(r_body.jobId){
+                ctx.body = {
+                    code: 200,
+                    msg: 'SUCCESS',
+                    data: data
+                }
+            }else{
+                ctx.body = {
+                    err: -3,
+                    msg: '请传入jobId',
+                }
+            }
+            
+        }).catch((err) => {
+            ctx.body = {
+                err: -2,
+                msg: err,
+            }
+        })
+    }else{
+        ctx.body = {
+            err: -4,
+            msg: '未传入修改参数',
+        }
+    }
+    
 })
 
 
