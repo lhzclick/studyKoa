@@ -36,6 +36,12 @@ let allServices = {
         return allServices.query(_sql)
     },
 
+    // 用户登录验证
+    login:function(data){
+        const _sql = `select * from user `
+        return allServices.query(_sql)
+    },
+
 
     // 增
     addScore:function(data){
