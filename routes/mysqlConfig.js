@@ -60,6 +60,13 @@ let allServices = {
         }else{
             _sql = `select * from score limit ${num1}, ${data.pageSize}`
         }
+        console.log(_sql)
+        return allServices.query(_sql)
+        
+    },
+    // 查询总数
+    getTotal:function(){
+        const _sql = `SELECT COUNT(*) FROM score`
         return allServices.query(_sql)
     },
     // 删

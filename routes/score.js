@@ -61,14 +61,12 @@ router.post('/getScore', async (ctx, next) => {
         // token校验通过
         try {
             let decode = jwt.verify(token, secret)
+            let _data = {}
             await userService.getScore(r_body)
                 .then((data) => {
                     if (r_body.pageNo && r_body.pageSize) {
-                        ctx.body = {
-                            code: 200,
-                            msg: 'SUCCESS',
-                            data: data
-                        }
+                        
+                        _data.list = data
                     } else {
                         ctx.body = {
                             err: -1,
@@ -82,6 +80,29 @@ router.post('/getScore', async (ctx, next) => {
                         msg: err,
                     }
                 })
+            await userService.getTotal(r_body)
+            .then((data) => {
+                if (r_body.pageNo && r_body.pageSize) {
+                    
+                    _data.total = data[0]['COUNT(*)']
+                } else {
+                    ctx.body = {
+                        err: -1,
+                        msg: '请传入pageNo和pageSize',
+                    }
+                }
+
+            }).catch((err) => {
+                ctx.body = {
+                    err: -2,
+                    msg: err,
+                }
+            })
+            ctx.body = {
+                code: 200,
+                msg: 'SUCCESS',
+                data: _data
+            }
         } catch (err) {
             // token校验未通过
             ctx.body = {
