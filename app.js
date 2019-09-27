@@ -10,6 +10,7 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const score = require('./routes/score')
 const token = require('./routes/token')
+const check = require('./utils/check')
 
 // error handler
 onerror(app)
@@ -21,7 +22,8 @@ app.use(bodyparser({
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
-
+//中间件拦截路由
+app.use(check)
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
