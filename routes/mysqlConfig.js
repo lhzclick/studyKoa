@@ -56,9 +56,9 @@ let allServices = {
         let _sql = ''
         const num1 = (data.pageNo-1)*data.pageSize
         if(data.type){
-            _sql = `select * from score where type='${data.type}' limit ${num1}, ${data.pageSize}`
+            _sql = `select * from score where type='${data.type}' order by id desc limit ${num1}, ${data.pageSize}`
         }else{
-            _sql = `select * from score limit ${num1}, ${data.pageSize}`
+            _sql = `select * from score order by id desc limit  ${num1}, ${data.pageSize}`
         }
         console.log(_sql)
         return allServices.query(_sql)
