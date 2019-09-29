@@ -159,7 +159,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 router.post('/uploadUser', upload.single('file'),async(ctx,next)=>{
     const r_body = ctx.req.body
-    const filename = 'http://study_api.liuhu66.cn/'+ctx.req.file.filename   //  线上
+    const filename = 'http://study_api.liuhu66.cn/img/'+ctx.req.file.filename   //  线上
     // const filename = 'http://localhost:6060/img/'+ctx.req.file.filename   //  本地
 
     const params = {
