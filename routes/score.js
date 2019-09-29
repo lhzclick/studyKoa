@@ -146,7 +146,8 @@ router.post('/editScore', async (ctx, next) => {
 var storage = multer.diskStorage({
     //文件保存路径
     destination: function (req, file, cb) {
-        cb(null, 'public/img/')
+        cb(null, '../public/img/')              //  线上
+        // cb(null, 'public/img/')                 //  本地
     },
     //修改文件名称
     filename: function (req, file, cb) {
@@ -158,7 +159,9 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 router.post('/uploadUser', upload.single('file'),async(ctx,next)=>{
     const r_body = ctx.req.body
-    const filename = 'http://study_api.liuhu66.cn/'+ctx.req.file.filename
+    const filename = 'http://study_api.liuhu66.cn/'+ctx.req.file.filename   //  线上
+    // const filename = 'http://localhost:6060/img/'+ctx.req.file.filename   //  本地
+
     const params = {
         url:filename,
         userName:r_body.userName

@@ -15,11 +15,12 @@ router.post('/login', async (ctx, next) => {
     const r_body = ctx.request.body
     await userService.login(r_body)
         .then((data) => {
-            console.log(data)
             let isLogin = false
+            let user_url = ''
             data.map((item,i)=>{
                 if(item.userName==r_body.userName&&item.password==r_body.password){
                     isLogin = true
+                    user_url = item.url
                 }
             })
             // 用户名，密码验证通过
@@ -34,7 +35,8 @@ router.post('/login', async (ctx, next) => {
                     code: 200,
                     msg: 'LOGIN SUCCESS',
                     data: {
-                        token:token
+                        token:token,
+                        user_url:user_url
                     }
                 }
             }else{
