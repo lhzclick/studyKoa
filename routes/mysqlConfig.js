@@ -91,7 +91,13 @@ let allServices = {
         const _sql = `update score set ${str} where jobId='${data.jobId}'`
         
         return allServices.query(_sql)
-    }
+    },
+
+    // 用户头像更改
+    editUserImg:function(data){
+        const _sql = `update user set url='${data.url}' where userName='${data.userName}'`
+        return allServices.query(_sql)
+    },
 }
 
 module.exports = allServices
