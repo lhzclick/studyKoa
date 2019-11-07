@@ -17,7 +17,7 @@ router.post('/addScore', async (ctx, next) => {
     const r_body = ctx.request.body
     await userService.addScore(r_body)
         .then((data) => {
-            if (r_body.name && r_body.age && r_body.sex && r_body.score && r_body.type) {
+            if (r_body.name && r_body.age && r_body.sex && r_body.type) {
                 ctx.body = {
                     code: 200,
                     msg: 'SUCCESS',
@@ -138,6 +138,21 @@ router.post('/editScore', async (ctx, next) => {
         ctx.body = {
             err: -4,
             msg: '未传入修改参数',
+        }
+    }
+})
+// 测试类型查询
+router.get('/subjectType', async (ctx, next) => {
+    try{
+        ctx.body = {
+            code: 200,
+            msg: 'SUCCESS',
+            data: ['一单元测试','二单元测试','三单元测试','四单元测试','期中测试','五单元测试','六单元测试','七单元测试','八单元测试','期末测试']
+        }
+    }catch(err){
+        ctx.body = {
+            err: -1,
+            msg: '网络错误',
         }
     }
 })

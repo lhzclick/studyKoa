@@ -12,8 +12,7 @@ const secret = 'jwt demo'
 
 async function check(ctx, next) {
     let url = ctx.request.url;
-    console.log(url)
-    if(url == "/login") {
+    if(url == "/login"||url == "/sendCode"||url == "/register"||url == "/modify") {
         await next();
     }else {
         // let token = ctx.header.token;
