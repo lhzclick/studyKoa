@@ -11,6 +11,9 @@ const users = require('./routes/users')
 const score = require('./routes/score')
 const token = require('./routes/token')
 const check = require('./utils/check')
+var cors = require('koa2-cors')
+
+
 
 // error handler
 onerror(app)
@@ -35,6 +38,8 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+// 跨域解决
+app.use(cors())
 
 // routes
 app.use(index.routes(), index.allowedMethods())

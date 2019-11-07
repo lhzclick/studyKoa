@@ -1,7 +1,7 @@
 //      JSON WEB TOKEN 验证接口  
 const router = require('koa-router')()
 const userService = require('./mysqlConfig')
-var cors = require('koa2-cors')
+// var cors = require('koa2-cors')
 
 // jwt
 const jwt = require('jsonwebtoken')
@@ -13,7 +13,7 @@ let vCode = ''
 let emailCode = ''
 
 // 跨域解决
-router.use(cors())
+// router.use(cors())
 
 // 登录
 router.post('/login', async (ctx, next) => {
@@ -118,7 +118,8 @@ router.post('/sendCode', async (ctx, next) => {
 
 })
 // 发送邮件
-router.get('/sendMail', async (ctx, next) => {
+router.post('/sendMail', async (ctx, next) => {
+    const r_body = ctx.request.body
     if (r_body.mail) {
         let codeRandom = ''
         for (let i = 0; i < 4; i++) {
