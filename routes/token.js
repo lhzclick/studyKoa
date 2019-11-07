@@ -6,9 +6,11 @@ var cors = require('koa2-cors')
 // jwt
 const jwt = require('jsonwebtoken')
 const secret = 'jwt demo'
+const sendMail = require('../utils/sendMail')
 
 //  定义验证码 用于接口验证验证码是否匹配
 let vCode = ''
+let emailCode = ''
 
 // 跨域解决
 router.use(cors())
@@ -60,7 +62,7 @@ router.post('/login', async (ctx, next) => {
         })
 })
 
-// 发送验证码
+// 发送短信验证码
 router.post('/sendCode', async (ctx, next) => {
     const r_body = ctx.request.body
     var QcloudSms = require("qcloudsms_js");
@@ -79,7 +81,6 @@ router.post('/sendCode', async (ctx, next) => {
     // 设置请求回调处理, 这里只是演示，用户需要自定义相应处理回调
     function callback(err, res, resData) {
         if (err) {
-            console.log("err: ", err);
             ctx.body = {
                 err: -2,
                 msg: err,
@@ -115,6 +116,35 @@ router.post('/sendCode', async (ctx, next) => {
         }
     }
 
+})
+// 发送邮件
+router.get('/sendMail', async (ctx, next) => {
+    if (r_body.mail) {
+        let codeRandom = ''
+        for (let i = 0; i < 4; i++) {
+            codeRandom += Math.floor(Math.random() * 10)
+        }
+        await sendMail(r_body.mail,'验证邮件', `您的验证码是【${codeRandom}】`).then((data)=>{
+            ctx.body = {
+                code: 200,
+                msg: 'SEND SUCCESS',
+                data: {
+                    emailCode: emailCode
+                }
+            }
+        }).catch(err=>{
+            ctx.body = {
+                err: -1,
+                msg: err
+            }
+        })
+    } else {
+        ctx.body = {
+            err: -1,
+            msg: '参数错误',
+        }
+    }
+    
 })
 
 // 注册
