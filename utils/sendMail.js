@@ -1,7 +1,9 @@
 const email = {
     service: 'QQ',
-    user: '392539910@qq.com',       //  你的邮箱
-    pass: 'gykfrumavkyabijh',       // 你的密码
+    // user: '392539910@qq.com',       //  你的邮箱
+    // pass: 'gykfrumavkyabijh',       // 你的密码
+    user: '569227299@qq.com',       //  你的邮箱
+    pass: 'sbzctjmzggaybbaa',       // 你的密码
 }
 var nodemailer = require('nodemailer')
 var smtpTransport = require('nodemailer-smtp-transport');

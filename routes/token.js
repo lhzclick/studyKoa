@@ -125,7 +125,7 @@ router.post('/sendMail', async (ctx, next) => {
         for (let i = 0; i < 4; i++) {
             codeRandom += Math.floor(Math.random() * 10)
         }
-        await sendMail(r_body.mail,'验证邮件', `您的验证码是【${codeRandom}】`).then((data)=>{
+        await sendMail(r_body.mail,'草上飞', `草上飞：您的验证码是【${codeRandom}】，如需关闭请联系草上飞CEO：MS.he，联系电话：13129986283`).then((data)=>{
             ctx.body = {
                 code: 200,
                 msg: 'SEND SUCCESS',
