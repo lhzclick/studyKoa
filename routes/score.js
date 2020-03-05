@@ -124,5 +124,62 @@ router.post('/editScore', async (ctx, next) => {
     
 })
 
+// 测试接口
+router.post('/addStatistics', async (ctx, next) => {
+    const r_body = ctx.request.body
+    await userService.addStatistics(r_body)
+        .then((data) => {
+            if (r_body) {
+              ctx.body = {
+                code: 200,
+                msg: 'SUCCESS',
+                data: data
+              }
+            } else {
+              ctx.body = { err: -1, msg: '请录入完整信息' }
+            }
+        }).catch((err) => {
+            ctx.body = {
+                err: -2,
+                msg: err,
+            }
+        })
+})
+router.post('/getStatistics', async (ctx, next) => {
+    const r_body = ctx.request.body
+    let _data = {}
+    if (r_body.pageNo && r_body.pageSize) {
+        await userService.getStatistics(r_body)
+        .then((data) => {
+            _data.list = data
+        }).catch((err) => {
+            ctx.body = {
+                err: -3,
+                msg: err,
+            }
+        })
+        await userService.getStatisticsTotal(r_body)
+        .then((data) => {
+            _data.total = data[0]['COUNT(*)']
+
+        }).catch((err) => {
+            ctx.body = {
+                err: -2,
+                msg: err,
+            }
+        })
+        ctx.body = {
+            code: 200,
+            msg: '查询成功',
+            data: _data
+        }
+    } else {
+        ctx.body = {
+            err: -1,
+            msg: '参数错误',
+        }
+    }
+})
+
 
 module.exports = router

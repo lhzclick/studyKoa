@@ -78,7 +78,24 @@ let allServices = {
         const _sql = `update score set ${str} where jobId='${data.jobId}'`
         
         return allServices.query(_sql)
-    }
+    },
+
+    // 增加统计
+    addStatistics:function(data){
+        const createTime = (new Date()).getTime()
+        const _sql = `INSERT INTO statistics (a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,createTime) VALUES ('${data.a1}','${data.a2}','${data.a3}','${data.a4}','${data.a5}','${data.a6}','${data.a7}','${data.a8}','${data.a9}','${data.a10}','${data.a11}','${data.a12}','${data.a13}','${data.a14}','${data.a15}','${data.a16}','${data.a17}','${createTime}')`
+        return allServices.query(_sql)
+    },
+    getStatistics:function (data) {
+        const num1 = (data.pageNo-1)*data.pageSize
+        let _sql = `select * from statistics order by id desc limit  ${num1}, ${data.pageSize}`
+        return allServices.query(_sql)
+    },
+    
+    getStatisticsTotal:function(data){
+        const _sql = `SELECT COUNT(*) FROM statistics`
+        return allServices.query(_sql)
+    },
 }
 
 module.exports = allServices
